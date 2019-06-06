@@ -1,6 +1,8 @@
 import React from 'react';
 import cards from "./cards.json"
 import './App.css';
+import Wrapper from './components/Wrapper/wrapper.js';
+import Card from './components/cards/card'
 
 class App extends React.Component {
   state = {
@@ -11,20 +13,7 @@ class App extends React.Component {
     shuffleCards: false,
     clickedArray: [],
     cards: cards,
-    images: [{
-      "id": 1,
-      "name": "Bugs Bunny",
-      "image": "https://upload.wikimedia.org/wikipedia/en/thumb/1/17/Bugs_Bunny.svg/220px-Bugs_Bunny.svg.png",
-      "occupation": "Eats Carrots",
-      "location": "Space Jam"
-    },
-    {
-      "id": 2,
-      "name": "Homer Simpson",
-      "image": "https://www.google.com/imgres?imgurl=https%3A%2F%2Fcdn3.f-cdn.com%2Fcontestentries%2F1369261%2F17629740%2F5b48bf3491050_thumb900.jpg&imgrefurl=https%3A%2F%2Fwww.freelancer.com%2Fcontest%2FCreate-Cartoon-Characters-Smoking-Weed-1369261-byentry-22057609&docid=NYTfwopPDVpsUM&tbnid=FW2KyeIpQJw8EM%3A&vet=10ahUKEwiY2ID407DiAhWEl-AKHcwTBaoQMwiIASgPMA8..i&w=900&h=600&bih=871&biw=1078&q=cartoon%20characters&ved=0ahUKEwiY2ID407DiAhWEl-AKHcwTBaoQMwiIASgPMA8&iact=mrc&uact=8",
-      "occupation": "make his father's life miserable",
-      "location": "Springfield"
-    },]
+    images: []
   };
 
 
@@ -32,7 +21,7 @@ class App extends React.Component {
     console.log(cards)
   }
   //arrange picture in a randon manner
-  clickPicture = id => {
+  clickCount = id => {
     console.log("item.clicked", id, this.state.score, this.state.clickedArray)
 
 
@@ -84,21 +73,26 @@ class App extends React.Component {
 
 
 
-
+//map over this.state.cards and render a card component for each card object
   render() {
     return (
-      <div className="list-group">
-        {this.state.cards.map(item => (
-          <div>
-          <p className="list-group-item" >
+      <Wrapper>
+        <header scare={this.state.score}
+        highScore={this.state.highScore}
+        >
+          <h1>Clicky Game</h1>
+        </header>
+        {this.state.cards.map(cards =>(
+          <Card
+            clickCount={this.clickCount}
+            id={cards.id}
+            key={cards.id}
+            image={cards.image}
+            />
 
-            {item.name}
-          </p>
-
-          <img src={item.image} alt="" id={item.id} onClick={() => this.clickPicture(item.id)}  />
-          </div>
-      ))}
-      </div>
+        ))}
+        
+      </Wrapper>
 
     );
   }
